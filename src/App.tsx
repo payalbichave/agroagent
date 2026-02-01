@@ -3,8 +3,10 @@ import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+
 import { DashboardLayout } from "./components/DashboardLayout";
 import { ProtectedRoute } from "./components/ProtectedRoute";
+
 import Auth from "./pages/Auth";
 import Overview from "./pages/Overview";
 import FarmProfile from "./pages/FarmProfile";
@@ -26,29 +28,30 @@ const App = () => (
       <Sonner />
       <BrowserRouter>
         <Routes>
+          {/* PUBLIC */}
           <Route path="/auth" element={<Auth />} />
+
+          {/* PROTECTED */}
           <Route
-            path="/*"
+            path="/"
             element={
               <ProtectedRoute>
-                <DashboardLayout>
-                  <Routes>
-                    <Route path="/" element={<Overview />} />
-                    <Route path="/farm-profile" element={<FarmProfile />} />
-                    <Route path="/advisory" element={<SmartAdvisory />} />
-                    <Route path="/diagnosis" element={<VisionDiagnosis />} />
-                    <Route path="/market" element={<MarketSales />} />
-                    <Route path="/scheduler" element={<Scheduler />} />
-                    <Route path="/knowledge" element={<KnowledgeHub />} />
-                    <Route path="/insights" element={<Insights />} />
-                    <Route path="/settings" element={<Settings />} />
-                    {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-                    <Route path="*" element={<NotFound />} />
-                  </Routes>
-                </DashboardLayout>
+                <DashboardLayout />
               </ProtectedRoute>
             }
-          />
+          >
+            <Route index element={<Overview />} />
+            <Route path="farm-profile" element={<FarmProfile />} />
+            <Route path="advisory" element={<SmartAdvisory />} />
+            <Route path="diagnosis" element={<VisionDiagnosis />} />
+            <Route path="market" element={<MarketSales />} />
+            <Route path="scheduler" element={<Scheduler />} />
+            <Route path="knowledge" element={<KnowledgeHub />} />
+            <Route path="insights" element={<Insights />} />
+            <Route path="settings" element={<Settings />} />
+          </Route>
+
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
     </TooltipProvider>
