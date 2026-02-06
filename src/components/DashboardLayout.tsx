@@ -3,6 +3,7 @@ import { Link, useLocation, useNavigate, Outlet } from "react-router-dom";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
+import { VoiceSearchBar } from "@/components/VoiceSearchBar";
 import {
   LayoutDashboard,
   MapPin,
@@ -30,6 +31,7 @@ const navItems = [
   { title: "Insights & Reports", icon: BarChart3, path: "/insights" },
   { title: "Settings", icon: Settings, path: "/settings" },
 ];
+
 
 export function DashboardLayout() {
   const location = useLocation();
@@ -118,9 +120,17 @@ export function DashboardLayout() {
       </aside>
 
       {/* MAIN CONTENT */}
-      <main className="flex-1 p-6 overflow-auto">
-        <Outlet />
+      <main className="flex-1 overflow-auto">
+        {/* Voice Search Bar */}
+        <div className="sticky top-0 z-10 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-b p-4">
+          <VoiceSearchBar />
+        </div>
+
+        <div className="p-6">
+          <Outlet />
+        </div>
       </main>
     </div>
   );
 }
+
